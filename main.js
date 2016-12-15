@@ -13,10 +13,11 @@ class mygulp{
     }
     dest(path){
         return through.obj(function(a,b,c){
-             a.content.pipe(fs.createWriteStream(path))
+             fs.writeFileSync(path,a.content)
             c();
         })
     }
+    
 
 }
 

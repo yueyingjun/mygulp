@@ -1,5 +1,6 @@
-var mygulp=require("./main.js");
-mygulp.src("index.js").pipe(mygulp.dest("aa.js"));
+VAR MYGULP=REQUIRE("./MAIN.JS");
+VAR UP=REQUIRE("./UP.JS");
+MYGULP.SRC("INDEX.JS").PIPE(UP()).PIPE(MYGULP.DEST("AA.JS"));
 
 
 

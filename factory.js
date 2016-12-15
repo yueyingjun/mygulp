@@ -5,7 +5,9 @@ class factory{
     this.parse();
    }
    parse(){
-      this.content=fs.createReadStream(this.path);
+      this.content=fs.readFileSync(this.path);
+
+
    }
 }
 
