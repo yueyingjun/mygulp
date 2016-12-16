@@ -2,6 +2,7 @@ var through=require("./through");
 var factory=require("./factory");
 var fs=require("fs");
 var gaze=require("gaze");
+var route=require("path")
 class mygulp{
     constructor(){
         this.taskArr=[];
@@ -20,7 +21,15 @@ class mygulp{
     }
     dest(path){
         return through.obj(function(a,b,c){
-             fs.writeFileSync(path,a.content)
+             a.contents.forEach(function(obj){
+                 if(obj.flag==null){
+                     console.log("空的")
+                 }else if(obj.flag=="object"){
+                     console.log(obj.content);
+                 }else if(obj.flag=="file"){
+                     fs.writeFileSync(route.normalize(path+"/"+obj.filename),obj.content);
+                 }
+             })
             c();
         })
     }
