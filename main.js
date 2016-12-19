@@ -22,26 +22,24 @@ class mygulp {
     }
     dest(path){
         return through.obj(function(a,b,c){
-            a.contents.forEach(function(obj){
-                if(obj.flag==null){
-                    console.log("空的")
-                }else if(obj.flag=="object"){
-                    console.log(obj.content);
-                }else if(obj.flag=="file"){
-                    fs.exists(path,function(exit){
-                        if(exit){
-                            console.log("文件存在");
-                            fs.writeFileSync(route.normalize(path+"/"+obj.filename),obj.content);
-                        }else{
-                            console.log("文件不存在");
-                            makedir(path);
-                            fs.writeFileSync(route.normalize(path+"/"+obj.filename),obj.content);
-                        }
-                    })
-                    //fs.writeFileSync(route.normalize(path+"/"+obj.filename),obj.content);
+            fs.stat(path,function(error,data){
+                if(error){
+                    console.log("文件不存在");
+                    makedir(path);
+                }else{
+                    console.log("文件存在");
                 }
+                a.contents.forEach(function(obj){
+                    if(obj.flag==null){
+                        console.log("空的")
+                    }else if(obj.flag=="object"){
+                        console.log(obj.content);
+                    }else if(obj.flag=="file"){
+                        fs.writeFileSync(route.normalize(path+"/"+obj.filename),obj.content);
+                    }
+                })
+                c();
             })
-            c();
         })
     }
     task(taskname, callback) {

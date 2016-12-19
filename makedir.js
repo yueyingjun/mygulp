@@ -5,7 +5,7 @@ class makedir{
         this.make(path);
     }
 make(path){
-    var arr=path.split(route.sep);
+    var arr=path.split("/");
     var newarr="";
     arr.forEach(function(name,index){
         newarr+=name+"/";
