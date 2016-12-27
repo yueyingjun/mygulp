@@ -1,62 +1,46 @@
 var transform=require("stream").Transform;
-
 class throughClass extends transform{
-       constructor(opt){
-           super(opt);
-       }
+    constructor(opt){
+        super(opt);
+    }
 }
-
-
-function through(callback){
-   return function(opt,ck){
-       if(typeof opt=="function"){
-           ck=opt;
-           opt={};
-       }
-
-       return callback(opt,ck);
-   }
+//throughClass 继承了 tranform 这个类
+function through(callback) {
+    return function (opt, callfun) {
+        if (typeof opt == "function"){
+            callfun = opt;
+            opt = {};
+            return callback(opt, callfun);
+        }
+    }
 }
-
-module.exports=through(function(opt,ck){
-    var transformobj=new throughClass(opt);
-    transformobj._transform=ck;
-    return transformobj
+module.exports=through(function(opt,callfun){
+    var transformobj=new throughClass({opt});
+    transformobj._transform=callfun;
+    return transformobj;
 })
-module.exports.obj=through(function(opt,ck){
+module.exports.obj=through(function(opt,callfun){
     var transformobj=new throughClass({objectMode:true});
-    transformobj._transform=ck;
+    transformobj._transform=callfun;
     return transformobj
 })
-module.exports.read=through(function(opt,ck){
+module.exports.read=through(function(opt,callfun){
     var transformobj=new throughClass();
-    transformobj._read=ck;
-    return transformobj
+    transformobj._read=callfun;
+    return transformobj;
 })
-module.exports.objRead=through(function(opt,ck){
+module.exports.objRead=through(function(opt,callfun){
     var transformobj=new throughClass({objectMode:true});
-    transformobj._read=ck;
-    return transformobj
+    transformobj._read=callfun;
+    return transformobj;
 })
-
-module.exports.write=through(function(opt,ck){
+module.exports.write=through(function(opt,callfun){
     var transformobj=new throughClass();
-    transformobj._write=ck;
-    return transformobj
+    transformobj._write=callfun;
+    return transformobj;
 })
-module.exports.objWrite=through(function(opt,ck){
+module.exports.objWrite=through(function(opt,callfun){
     var transformobj=new throughClass({objectMode:true});
-    transformobj._write=ck;
-    return transformobj
+    transformobj._write=callfun;
+    return transformobj;
 })
-
-
-
-
-
-
-
-
-
-
-
